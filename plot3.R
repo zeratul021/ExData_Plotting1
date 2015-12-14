@@ -11,6 +11,10 @@ colnames(dataTable) = dataHeader
 Sys.setlocale("LC_TIME", "en_US.UTF-8")
 dataTable$Date = as.Date(dataTable$Date, format="%d/%m/%Y")
 dataTable$Timestamp = strptime(paste(dataTable$Date, dataTable$Time), "%Y-%m-%d %H:%M:%S")
-plot(dataTable$Timestamp, dataTable$Global_active_power, type="l", ylab="Global Active Power (kilowatts)", xlab="")
-dev.copy(png, file="plot2.png", width=480, height=480)
+plot(dataTable$Timestamp, dataTable$Sub_metering_1, type="l", ylab="Energy Submetering", xlab="")
+lines(dataTable$Timestamp, dataTable$Sub_metering_2, type="l", col="red")
+lines(dataTable$Timestamp, dataTable$Sub_metering_3, type="l", col="blue")
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=1, lwd =2.5,col=c("black", "red", "blue"))
+
+dev.copy(png, file="plot3.png", width=480, height=480)
 dev.off()
