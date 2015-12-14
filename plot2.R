@@ -7,7 +7,9 @@ fileName = "household_power_consumption.txt"
 dataHeader = read.csv2(fileName, nrows = 1, header = F, sep =';', stringsAsFactors = FALSE)
 dataTable = read.csv2(fileName, skip = 66637, nrow = 2880, sep = ";", stringsAsFactors = F, dec=".")
 colnames(dataTable) = dataHeader
-#dataTable$Global_active_power = as.numeric(dataTable$Global_active_power)
-hist(dataTable$Global_active_power, col= "red", main= "Global Active Power", xlab= "Global Active Power (kilowatts)", ylab= "Frequency")
-dev.copy(png, file="plot1.png", width=480, height=480)
+Sys.setlocale("LC_TIME", "en_US.UTF-8")
+dataTable$Date = as.Date(dataTable$Date, format="%d/%m/%Y")
+dataTable$Timestamp = strptime(paste(dataTable$Date, dataTable$Time), "%Y-%m-%d %H:%M:%S")
+plot(dataTable$Timestamp, dataTable$Global_active_power, type="l", ylab="Global Active Power (kilowatts)", xlab="")
+dev.copy(png, file="plot2.png", width=480, height=480)
 dev.off()
